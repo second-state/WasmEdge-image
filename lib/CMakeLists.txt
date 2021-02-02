@@ -17,6 +17,6 @@ target_include_directories(ssvmHostModuleSSVMImage
   ${JPEG_INCLUDE}
   ${PNG_INCLUDE}
   ${Boost_INCLUDE_DIR}
-  ${SSVM_CORE_SRC_DIR}/include
-  ${SSVM_CORE_SRC_DIR}/thirdparty
+  ${SSVM_CORE_PATH}/include
+  ${SSVM_CORE_PATH}/thirdparty
 )
