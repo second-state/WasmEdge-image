@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 add_library(ssvmHostModuleSSVMImage
-  host/image_module.cpp
-  host/image_func.cpp
+  image_module.cpp
+  image_func.cpp
 )
 
 target_link_libraries(ssvmHostModuleSSVMImage

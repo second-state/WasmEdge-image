@@ -69,9 +69,12 @@ else()
   endif()
 endif()
 
+message(STATUS "Set ssvm-core source path: ${SSVM_CORE_PATH}")
+message(STATUS "Set ssvm-core binary path: ${SSVM_CORE_BIN_PATH}")
+
 include_directories(BEFORE
-  ${CMAKE_CURRENT_BINARY_DIR}/include/host
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/host
+  ${CMAKE_CURRENT_BINARY_DIR}/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 add_subdirectory(include)
 add_subdirectory(lib)
