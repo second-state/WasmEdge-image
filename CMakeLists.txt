@@ -20,6 +20,8 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 option(BUILD_TOOLS "Generate ssvm and ssvmc tools." OFF)
 
 find_package(Boost "1.68.0" REQUIRED)
+SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.so")
+find_package(ZLIB REQUIRED)
 
 # libjpeg and libpng path
 set(JPEG_LIB

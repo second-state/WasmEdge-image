@@ -10,6 +10,7 @@ target_link_libraries(ssvmHostModuleSSVMImage
   ssvmCommon
   ${JPEG_LIB}
   ${PNG_LIB}
+  ${ZLIB_LIBRARIES}
 )
 
 target_include_directories(ssvmHostModuleSSVMImage
