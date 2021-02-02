@@ -34,13 +34,6 @@ $ docker pull secondstate/ssvm:manylinux1_x86_64
 $ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) secondstate/ssvm:manylinux1_x86_64
 ```
 
-### Install gcc
-
-```bash
-(docker) $ yum update
-(docker) $ yum install -y make gcc gcc-c++
-```
-
 ### Build the libjpeg and the libpng
 
 ```bash
