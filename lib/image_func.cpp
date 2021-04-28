@@ -46,7 +46,7 @@ void resizeImg(const Image &Img, uint32_t W, uint32_t H, uint8_t *DstBuf) {
 
 /// Helper function to normalize image.
 void normalizeImg(Span<const uint8_t> V, float *DstBuf) {
-  for (auto I = 0; I < V.size(); I++) {
+  for (uint32_t I = 0; I < V.size(); I++) {
     *(DstBuf + I) = V[I] / 255.0;
   }
 }

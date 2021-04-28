@@ -43,7 +43,7 @@ if(NOT SSVM_CORE_PATH)
   FetchContent_Declare(
     ssvm
     GIT_REPOSITORY https://github.com/second-state/SSVM.git
-    GIT_TAG 0.7.3
+    GIT_TAG master
   )
 
   FetchContent_GetProperties(ssvm)
