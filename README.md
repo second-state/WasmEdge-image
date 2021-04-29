@@ -58,11 +58,6 @@ $ sudo apt install -y \
 	cmake \
 	libboost-all-dev
 
-# And you will need to install llvm for ssvm-aot tools
-$ sudo apt install -y \
-	llvm-dev \
-	liblld-10-dev
-
 # SSVM supports both clang++ and g++ compilers
 # You can choose one of them for building this project
 $ sudo apt install -y gcc g++
@@ -74,7 +69,7 @@ $ sudo apt install -y clang
 ```bash
 $ git clone --recursive git@github.com:second-state/ssvm-image.git
 $ cd ssvm-image
-$ git checkout 0.7.3
+$ git checkout 0.8.0-rc1
 ```
 
 ## Build SSVM-Image
@@ -105,7 +100,9 @@ $ docker run -it --rm \
 (docker)$ cmake -DSSVM_CORE_PATH=<path/to/ssvm/source> -DCMAKE_BUILD_TYPE=Release .. && make
 ```
 
-The executable `build/tools/ssvmc-tensorflow` is the AOT compiler for WASM files.
+The shared library `build/lib/libssvm-image_c.so` is the C API to create `ssvm-image` import object.
+The header `build/include/ssvm-image.h` is the header of the shared library.
+The static library `build/lib/libssvmHostModuleSSVMImage.a` is for executables linking in CMake.
 
 # How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11
 
