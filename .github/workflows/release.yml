@@ -53,7 +53,6 @@ jobs:
           rm -rf build
           cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TOOLS=Off -DBOOST_INCLUDEDIR=./boost_1_75_0/ .
           cmake --build build
-          cp include/ssvm-image.h build/include
           cd build
           tar -zcvf ssvm-image.tar.gz include/ssvm-image.h lib/libssvm-image_c.so
           tar Jcvf ssvm-image.tar.xz include/ssvm-image.h lib/libssvm-image_c.so

@@ -52,7 +52,8 @@ if(NOT SSVM_CORE_PATH)
     FetchContent_Populate(ssvm)
     message(STATUS "Fetching ssvm repository - done")
   endif()
-  add_subdirectory(${ssvm_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/utils/ssvm-core)
+  # Add the include only because this project needs ssvm headers only.
+  add_subdirectory(${ssvm_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/utils/ssvm-core/include)
   set(SSVM_CORE_PATH ${ssvm_SOURCE_DIR})
   set(SSVM_CORE_BIN_PATH ${CMAKE_CURRENT_BINARY_DIR}/utils/ssvm-core)
 else()
@@ -61,7 +62,8 @@ else()
     REALPATH
     BASE_DIR "${CMAKE_CURRENT_BINARY_DIR}")
   if(NOT SSVM_CORE_BIN_PATH)
-    add_subdirectory(${SSVM_CORE_PATH} ${CMAKE_CURRENT_BINARY_DIR}/utils/ssvm-core)
+    # Add the include only because this project needs ssvm headers only.
+    add_subdirectory(${SSVM_CORE_PATH}/include ${CMAKE_CURRENT_BINARY_DIR}/utils/ssvm-core/include)
     set(SSVM_CORE_BIN_PATH ${CMAKE_CURRENT_BINARY_DIR}/utils/ssvm-core)
   else()
     get_filename_component(
