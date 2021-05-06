@@ -14,7 +14,7 @@
 #include "common/span.h"
 #include "image_func.h"
 
-namespace SSVM {
+namespace WasmEdge {
 namespace Host {
 
 namespace {
@@ -53,10 +53,10 @@ void normalizeImg(Span<const uint8_t> V, float *DstBuf) {
 } // namespace
 
 Expect<uint32_t>
-SSVMImageLoadJPGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
-                             uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                             uint32_t TargetImgW, uint32_t TargetImgH,
-                             uint32_t DstBufPtr) {
+WasmEdgeImageLoadJPGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
+                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                 uint32_t TargetImgW, uint32_t TargetImgH,
+                                 uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -73,10 +73,10 @@ SSVMImageLoadJPGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 Expect<uint32_t>
-SSVMImageLoadJPGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
-                             uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                             uint32_t TargetImgW, uint32_t TargetImgH,
-                             uint32_t DstBufPtr) {
+WasmEdgeImageLoadJPGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
+                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                 uint32_t TargetImgW, uint32_t TargetImgH,
+                                 uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -93,10 +93,10 @@ SSVMImageLoadJPGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 Expect<uint32_t>
-SSVMImageLoadJPGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                               uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                               uint32_t TargetImgW, uint32_t TargetImgH,
-                               uint32_t DstBufPtr) {
+WasmEdgeImageLoadJPGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
+                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                   uint32_t TargetImgW, uint32_t TargetImgH,
+                                   uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -114,10 +114,10 @@ SSVMImageLoadJPGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 Expect<uint32_t>
-SSVMImageLoadJPGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                               uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                               uint32_t TargetImgW, uint32_t TargetImgH,
-                               uint32_t DstBufPtr) {
+WasmEdgeImageLoadJPGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
+                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                   uint32_t TargetImgW, uint32_t TargetImgH,
+                                   uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -135,10 +135,10 @@ SSVMImageLoadJPGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 Expect<uint32_t>
-SSVMImageLoadPNGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
-                             uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                             uint32_t TargetImgW, uint32_t TargetImgH,
-                             uint32_t DstBufPtr) {
+WasmEdgeImageLoadPNGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
+                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                 uint32_t TargetImgW, uint32_t TargetImgH,
+                                 uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -155,10 +155,10 @@ SSVMImageLoadPNGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 Expect<uint32_t>
-SSVMImageLoadPNGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
-                             uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                             uint32_t TargetImgW, uint32_t TargetImgH,
-                             uint32_t DstBufPtr) {
+WasmEdgeImageLoadPNGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
+                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                 uint32_t TargetImgW, uint32_t TargetImgH,
+                                 uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -175,10 +175,10 @@ SSVMImageLoadPNGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 Expect<uint32_t>
-SSVMImageLoadPNGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                               uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                               uint32_t TargetImgW, uint32_t TargetImgH,
-                               uint32_t DstBufPtr) {
+WasmEdgeImageLoadPNGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
+                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                   uint32_t TargetImgW, uint32_t TargetImgH,
+                                   uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -196,10 +196,10 @@ SSVMImageLoadPNGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 Expect<uint32_t>
-SSVMImageLoadPNGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                               uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                               uint32_t TargetImgW, uint32_t TargetImgH,
-                               uint32_t DstBufPtr) {
+WasmEdgeImageLoadPNGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
+                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                   uint32_t TargetImgW, uint32_t TargetImgH,
+                                   uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -217,4 +217,4 @@ SSVMImageLoadPNGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
 }
 
 } // namespace Host
-} // namespace SSVM
+} // namespace WasmEdge

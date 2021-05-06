@@ -4,13 +4,13 @@
 #include "common/errcode.h"
 #include "runtime/hostfunc.h"
 
-namespace SSVM {
+namespace WasmEdge {
 namespace Host {
 
-template <typename T> class SSVMImage : public Runtime::HostFunction<T> {
+template <typename T> class WasmEdgeImage : public Runtime::HostFunction<T> {
 public:
-  SSVMImage() : Runtime::HostFunction<T>(0) {}
+  WasmEdgeImage() : Runtime::HostFunction<T>(0) {}
 };
 
 } // namespace Host
-} // namespace SSVM
+} // namespace WasmEdge

@@ -6,10 +6,11 @@
 #include "runtime/hostfunc.h"
 #include "runtime/instance/memory.h"
 
-namespace SSVM {
+namespace WasmEdge {
 namespace Host {
 
-class SSVMImageLoadJPGToRGB8 : public SSVMImage<SSVMImageLoadJPGToRGB8> {
+class WasmEdgeImageLoadJPGToRGB8
+    : public WasmEdgeImage<WasmEdgeImageLoadJPGToRGB8> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -17,7 +18,8 @@ public:
                         uint32_t DstBufPtr);
 };
 
-class SSVMImageLoadJPGToBGR8 : public SSVMImage<SSVMImageLoadJPGToBGR8> {
+class WasmEdgeImageLoadJPGToBGR8
+    : public WasmEdgeImage<WasmEdgeImageLoadJPGToBGR8> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -25,7 +27,8 @@ public:
                         uint32_t DstBufPtr);
 };
 
-class SSVMImageLoadJPGToRGB32F : public SSVMImage<SSVMImageLoadJPGToRGB32F> {
+class WasmEdgeImageLoadJPGToRGB32F
+    : public WasmEdgeImage<WasmEdgeImageLoadJPGToRGB32F> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -33,7 +36,8 @@ public:
                         uint32_t DstBufPtr);
 };
 
-class SSVMImageLoadJPGToBGR32F : public SSVMImage<SSVMImageLoadJPGToBGR32F> {
+class WasmEdgeImageLoadJPGToBGR32F
+    : public WasmEdgeImage<WasmEdgeImageLoadJPGToBGR32F> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -41,7 +45,8 @@ public:
                         uint32_t DstBufPtr);
 };
 
-class SSVMImageLoadPNGToRGB8 : public SSVMImage<SSVMImageLoadPNGToRGB8> {
+class WasmEdgeImageLoadPNGToRGB8
+    : public WasmEdgeImage<WasmEdgeImageLoadPNGToRGB8> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -49,7 +54,8 @@ public:
                         uint32_t DstBufPtr);
 };
 
-class SSVMImageLoadPNGToBGR8 : public SSVMImage<SSVMImageLoadPNGToBGR8> {
+class WasmEdgeImageLoadPNGToBGR8
+    : public WasmEdgeImage<WasmEdgeImageLoadPNGToBGR8> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -57,7 +63,8 @@ public:
                         uint32_t DstBufPtr);
 };
 
-class SSVMImageLoadPNGToRGB32F : public SSVMImage<SSVMImageLoadPNGToRGB32F> {
+class WasmEdgeImageLoadPNGToRGB32F
+    : public WasmEdgeImage<WasmEdgeImageLoadPNGToRGB32F> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -65,7 +72,8 @@ public:
                         uint32_t DstBufPtr);
 };
 
-class SSVMImageLoadPNGToBGR32F : public SSVMImage<SSVMImageLoadPNGToBGR32F> {
+class WasmEdgeImageLoadPNGToBGR32F
+    : public WasmEdgeImage<WasmEdgeImageLoadPNGToBGR32F> {
 public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
@@ -74,4 +82,4 @@ public:
 };
 
 } // namespace Host
-} // namespace SSVM
+} // namespace WasmEdge

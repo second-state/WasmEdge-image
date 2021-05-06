@@ -1,3 +1,15 @@
+### 0.8.0-rc2 (2021-05-07)
+
+This is the host function extension for [WasmEdge](https://github.com/WasmEdge/WasmEdge).
+Please refer to the [WasmEdge 0.8.0](https://github.com/WasmEdge/WasmEdge/releases/tag/0.8.0) for more details.
+
+Features:
+
+* Renamed this project to `WasmEdge-Image` and updated the `WasmEdge` dependency.
+* Added pre-built `libpng` and `libjpeg` shared libraries.
+* Added `wasmedge-image` C API shared library.
+* Added release CI.
+
 ### 0.8.0-rc1 (2021-04-30)
 
 This is the host function extension for [SSVM](https://github.com/second-state/SSVM).

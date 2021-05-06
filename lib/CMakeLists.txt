@@ -1,43 +1,43 @@
 # SPDX-License-Identifier: Apache-2.0
 
-add_library(ssvmHostModuleSSVMImage
+add_library(wasmedgeHostModuleWasmEdgeImage
   image_module.cpp
   image_func.cpp
 )
 
-target_link_libraries(ssvmHostModuleSSVMImage
+target_link_libraries(wasmedgeHostModuleWasmEdgeImage
   PRIVATE
   ${JPEG_LIB}
   ${PNG_LIB}
   ${ZLIB_LIBRARIES}
 )
 
-target_include_directories(ssvmHostModuleSSVMImage
+target_include_directories(wasmedgeHostModuleWasmEdgeImage
   PUBLIC
   ${JPEG_INCLUDE}
   ${PNG_INCLUDE}
-  ${Boost_INCLUDE_DIR}
-  ${SSVM_CORE_PATH}/include
-  ${SSVM_CORE_PATH}/thirdparty
+  ${Boost_INCLUDE_DIRS}
+  ${WASMEDGE_CORE_PATH}/include
+  ${WASMEDGE_CORE_PATH}/thirdparty
 )
 
-add_library(ssvm-image_c SHARED
-  ssvm-image.cpp
+add_library(wasmedge-image_c SHARED
+  wasmedge-image.cpp
   image_module.cpp
   image_func.cpp
 )
 
-target_link_libraries(ssvm-image_c
+target_link_libraries(wasmedge-image_c
   PUBLIC
   ${ZLIB_LIBRARIES}
 )
 
-target_include_directories(ssvm-image_c
+target_include_directories(wasmedge-image_c
   PUBLIC
   ${JPEG_INCLUDE}
   ${PNG_INCLUDE}
-  ${Boost_INCLUDE_DIR}
-  ${SSVM_CORE_PATH}/include
-  ${SSVM_CORE_PATH}/thirdparty
-  ${SSVM_CORE_BIN_PATH}/include/api
+  ${Boost_INCLUDE_DIRS}
+  ${WASMEDGE_CORE_PATH}/include
+  ${WASMEDGE_CORE_PATH}/thirdparty
+  ${WASMEDGE_CORE_BIN_PATH}/include/api
 )

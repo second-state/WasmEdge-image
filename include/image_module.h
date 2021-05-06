@@ -3,14 +3,14 @@
 
 #include "runtime/importobj.h"
 
-namespace SSVM {
+namespace WasmEdge {
 namespace Host {
 
-class SSVMImageModule : public Runtime::ImportObject {
+class WasmEdgeImageModule : public Runtime::ImportObject {
 public:
-  SSVMImageModule();
-  ~SSVMImageModule() = default;
+  WasmEdgeImageModule();
+  ~WasmEdgeImageModule() = default;
 };
 
 } // namespace Host
-} // namespace SSVM
+} // namespace WasmEdge

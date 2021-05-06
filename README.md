@@ -1,14 +1,14 @@
-# Second State WebAssembly VM for Image Extension
+# WasmEdge for Image Extension
 
-The [Second State VM (SSVM)](https://github.com/second-state/ssvm) is a high performance WebAssembly runtime optimized for server side applications. This project provides support for accessing with [JPEG library](http://ijg.org/) and [PNG library](http://www.libpng.org/pub/png/libpng.html).
+The [WasmEdge](https://github.com/WasmEdge/WasmEdge) (formerly `SSVM`) is a high performance WebAssembly runtime optimized for server side applications. This project provides support for accessing with [JPEG library](http://ijg.org/) and [PNG library](http://www.libpng.org/pub/png/libpng.html).
 
 ## Motivation
 
-For this SSVM Image extension, we prefer to link the [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) statically into the SSVM Image static library. On the other hand, the C API shared library version of this SSVM Image extension requires the `libjpeg` and `libpng` shared library. Hence, we compile and release the pre-built static and shared library of [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) on the legacy operating system, and link them into our SSVM Image extension library for not only reducing the compilation time, but also saving the library installation.
+For this WasmEdge Image extension, we prefer to link the [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) statically into the WasmEdge Image static library. On the other hand, the C API shared library version of this WasmEdge Image extension requires the `libjpeg` and `libpng` shared library. Hence, we compile and release the pre-built static and shared library of [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) on the legacy operating system, and link them into our WasmEdge Image extension library for not only reducing the compilation time, but also saving the library installation.
 
 ## Requirements
 
-The SSVM Image shared library `libssvm-image_c.so` is provided for the SSVM-Image extension of the SSVM shared library. When linking with this shared library, `libjpeg.so.8` and `libpng16.so.16` is required.
+The WasmEdge Image shared library `libwasmedge-image_c.so` is provided for the WasmEdge-Image extension of the WasmEdge shared library. When linking with this shared library, `libjpeg.so.8` and `libpng16.so.16` is required.
 
 For `ubuntu 20.04`, the following commands can install these libraries:
 ```bash
@@ -19,8 +19,8 @@ $ sudo apt-get install -y libjpeg-dev libpng-dev
 Or you can download and install the pre-built shared libraries:
 
 ```bash
-$ wget https://github.com/second-state/ssvm-image/releases/download/0.7.3/ssvm-image-deps-0.7.3-manylinux1_x86_64.tar.gz
-$ tar -C /usr/local/lib -zxvf ssvm-image-deps-0.7.3-manylinux1_x86_64.tar.gz
+$ wget https://github.com/second-state/wasmedge-image/releases/download/0.8.0/WasmEdge-image-deps-0.8.0-manylinux1_x86_64.tar.gz
+$ tar -C /usr/local/lib -zxvf WasmEdge-image-deps-0.8.0-manylinux1_x86_64.tar.gz
 $ ln -s /usr/local/lib/libjpeg.so.8.3.0 /usr/local/lib/libjpeg.so
 $ ln -s /usr/local/lib/libpng16.so.16.37.0 /usr/local/lib/libpng.so
 $ ldconfig
@@ -44,12 +44,12 @@ This project is under the License as the same as the [libjpeg](http://ijg.org/) 
 Our docker image is based on `ubuntu 20.04`.
 
 ```bash
-$ docker pull secondstate/ssvm
+$ docker pull wasmedge/wasmedge
 ```
 
 ### Or setup the environment manually
 
-Please notice that SSVM-Image requires cmake>=3.11 and libboost>=1.68.
+Please notice that WasmEdge-Image requires cmake>=3.11 and libboost>=1.68.
 
 ```bash
 # Tools and libraries
@@ -58,51 +58,51 @@ $ sudo apt install -y \
 	cmake \
 	libboost-all-dev
 
-# SSVM supports both clang++ and g++ compilers
+# WasmEdge supports both clang++ and g++ compilers
 # You can choose one of them for building this project
 $ sudo apt install -y gcc g++
 $ sudo apt install -y clang
 ```
 
-## Get SSVM-Image Source Code
+## Get WasmEdge-Image Source Code
 
 ```bash
-$ git clone --recursive git@github.com:second-state/ssvm-image.git
-$ cd ssvm-image
+$ git clone https://github.com/second-state/WasmEdge-image.git
+$ cd WasmEdge-image
 $ git checkout 0.8.0-rc1
 ```
 
-## Build SSVM-Image
+## Build WasmEdge-Image
 
-SSVM-Image depends on SSVM-Core, you have to prepare SSVM-Core before you build SSVM-Image.
-We provides two options for setting up the SSVM-Core:
+WasmEdge-Image depends on WasmEdge-Core, you have to prepare WasmEdge-Core before you build WasmEdge-Image.
+We provides two options for setting up the WasmEdge-Core:
 
 ### Create and Enter the Build Folder
 
 ```bash
-# After pulling our ssvm docker image
+# After pulling our WasmEdge docker image
 $ docker run -it --rm \
-    -v <path/to/your/ssvm-tensorflow/source/folder>:/root/ssvm-image \
-    secondstate/ssvm:latest
-(docker)$ cd /root/ssvm-image
+    -v <path/to/your/WasmEdge-tensorflow/source/folder>:/root/WasmEdge-tensorflow \
+    wasmedge/wasmedge:latest
+(docker)$ cd /root/WasmEdge-tensorflow
 (docker)$ mkdir -p build && cd build
 ```
 
-### Option 1. Use built-in CMakeLists to get SSVM-Core (Recommended)
+### Option 1. Use built-in CMakeLists to get WasmEdge-Core (Recommended)
 
 ```bash
 (docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make
 ```
 
-### Option 2. Use specific version of SSVM-Core by giving SSVM_CORE_PATH
+### Option 2. Use specific version of WasmEdge-Core by giving WASMEDGE_CORE_PATH
 
 ```bash
-(docker)$ cmake -DSSVM_CORE_PATH=<path/to/ssvm/source> -DCMAKE_BUILD_TYPE=Release .. && make
+(docker)$ cmake -DWASMEDGE_CORE_PATH=<path/to/WasmEdge/source> -DCMAKE_BUILD_TYPE=Release .. && make
 ```
 
-The shared library `build/lib/libssvm-image_c.so` is the C API to create `ssvm-image` import object.
-The header `build/include/ssvm-image.h` is the header of the shared library.
-The static library `build/lib/libssvmHostModuleSSVMImage.a` is for executables linking in CMake.
+The shared library `build/lib/libwasmedge-image_c.so` is the C API to create `wasmedge-image` import object.
+The header `build/include/wasmedge-image.h` is the header of the shared library.
+The static library `build/lib/libwasmedgeHostModuleWasmEdgeImage.a` is for executables linking in CMake.
 
 # How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11
 
@@ -119,8 +119,8 @@ $ tar -zxvf jpegsrc.v8c.tar.gz
 ## Pull the manylinux1 docker image and run
 
 ```bash
-$ docker pull secondstate/ssvm:manylinux1_x86_64
-$ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) secondstate/ssvm:manylinux1_x86_64
+$ docker pull wasmedge/wasmedge:manylinux1_x86_64
+$ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux1_x86_64
 ```
 
 ## Build the libjpeg and the libpng
