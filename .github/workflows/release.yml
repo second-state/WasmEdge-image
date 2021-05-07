@@ -43,10 +43,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Build manylinux2014_x86_64 package
         run: |
+          yum check-update || true
+          yum install -y wget
           curl -s -L -O --remote-name-all https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.tar.bz2
           bzip2 -dc boost_1_75_0.tar.bz2 | tar -xf -
-          yum check-update || true
-          yum install -y rpm-build wget
           export PATH="/toolchain/bin:$PATH"
           export CC=gcc
           export CXX=g++
