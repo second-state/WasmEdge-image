@@ -17,6 +17,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_ENABLE_EXPORTS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# List of WasmEdge options
 option(BUILD_TOOLS "Generate wasmedge and wasmedgec tools." OFF)
 option(BUILD_AOT_RUNTIME "Enable WasmEdge LLVM-based ahead of time compilation runtime." OFF)
 option(BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
@@ -45,7 +47,7 @@ if(NOT WASMEDGE_CORE_PATH)
   FetchContent_Declare(
     wasmedge
     GIT_REPOSITORY https://github.com/WasmEdge/WasmEdge.git
-    GIT_TAG master
+    GIT_TAG 0.8.0
   )
 
   FetchContent_GetProperties(wasmedge)

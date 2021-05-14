@@ -69,7 +69,7 @@ $ sudo apt install -y clang
 ```bash
 $ git clone https://github.com/second-state/WasmEdge-image.git
 $ cd WasmEdge-image
-$ git checkout 0.8.0-rc1
+$ git checkout 0.8.0
 ```
 
 ## Build WasmEdge-Image
