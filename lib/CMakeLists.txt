@@ -28,7 +28,9 @@ add_library(wasmedge-image_c SHARED
 )
 
 target_link_libraries(wasmedge-image_c
-  PUBLIC
+  PRIVATE
+  wasmedgeCommon
+  wasmedgeSystem
   ${ZLIB_LIBRARIES}
 )
 

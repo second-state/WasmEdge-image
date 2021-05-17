@@ -18,6 +18,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_ENABLE_EXPORTS ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 option(BUILD_TOOLS "Generate wasmedge and wasmedgec tools." OFF)
+option(BUILD_AOT_RUNTIME "Enable WasmEdge LLVM-based ahead of time compilation runtime." OFF)
+option(BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
 
 find_package(Boost "1.68.0" REQUIRED)
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.so")
@@ -52,8 +54,7 @@ if(NOT WASMEDGE_CORE_PATH)
     FetchContent_Populate(wasmedge)
     message(STATUS "Fetching WasmEdge repository - done")
   endif()
-  # Add the include only because this project needs WasmEdge headers only.
-  add_subdirectory(${wasmedge_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/utils/WasmEdge-core/include)
+  add_subdirectory(${wasmedge_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/utils/WasmEdge-core)
   set(WASMEDGE_CORE_PATH ${wasmedge_SOURCE_DIR})
   set(WASMEDGE_CORE_BIN_PATH ${CMAKE_CURRENT_BINARY_DIR}/utils/WasmEdge-core)
 else()
@@ -62,8 +63,7 @@ else()
     REALPATH
     BASE_DIR "${CMAKE_CURRENT_BINARY_DIR}")
   if(NOT WASMEDGE_CORE_BIN_PATH)
-    # Add the include only because this project needs WasmEdge headers only.
-    add_subdirectory(${WASMEDGE_CORE_PATH}/include ${CMAKE_CURRENT_BINARY_DIR}/utils/WasmEdge-core/include)
+    add_subdirectory(${WASMEDGE_CORE_PATH} ${CMAKE_CURRENT_BINARY_DIR}/utils/WasmEdge-core)
     set(WASMEDGE_CORE_BIN_PATH ${CMAKE_CURRENT_BINARY_DIR}/utils/WasmEdge-core)
   else()
     get_filename_component(
