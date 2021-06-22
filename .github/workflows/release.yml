@@ -59,8 +59,8 @@ jobs:
         cd ..
         mv build/WasmEdge-image.tar.gz WasmEdge-image.tar.gz
         mv build/WasmEdge-image.tar.xz WasmEdge-image.tar.xz
-        wget https://github.com/second-state/WasmEdge-image/releases/download/0.7.3/ssvm-image-deps-0.7.3-manylinux1_x86_64.tar.gz
-        tar -zxvf ssvm-image-deps-0.7.3-manylinux1_x86_64.tar.gz
+        wget https://github.com/second-state/WasmEdge-image/releases/download/0.8.0/WasmEdge-image-deps-0.8.0-manylinux1_x86_64.tar.gz
+        tar -zxvf WasmEdge-image-deps-0.8.0-manylinux1_x86_64.tar.gz
         tar -zcvf WasmEdge-image-deps.tar.gz libjpeg.so.8.3.0 libpng16.so.16.37.0
         tar Jcvf WasmEdge-image-deps.tar.xz libjpeg.so.8.3.0 libpng16.so.16.37.0
         ls -alF

@@ -6,7 +6,9 @@ add_library(wasmedgeHostModuleWasmEdgeImage
 )
 
 target_link_libraries(wasmedgeHostModuleWasmEdgeImage
-  PRIVATE
+  PUBLIC
+  wasmedgeCommon
+  Boost::boost
   ${JPEG_LIB}
   ${PNG_LIB}
   ${ZLIB_LIBRARIES}
@@ -16,9 +18,7 @@ target_include_directories(wasmedgeHostModuleWasmEdgeImage
   PUBLIC
   ${JPEG_INCLUDE}
   ${PNG_INCLUDE}
-  ${Boost_INCLUDE_DIRS}
   ${WASMEDGE_CORE_PATH}/include
-  ${WASMEDGE_CORE_PATH}/thirdparty
 )
 
 if (BUILD_SHARED_LIB)
@@ -29,9 +29,9 @@ if (BUILD_SHARED_LIB)
   )
 
   target_link_libraries(wasmedge-image_c
-    PRIVATE
+    PUBLIC
     wasmedgeCommon
-    wasmedgeSystem
+    Boost::boost
     ${ZLIB_LIBRARIES}
   )
 
@@ -39,9 +39,7 @@ if (BUILD_SHARED_LIB)
     PUBLIC
     ${JPEG_INCLUDE}
     ${PNG_INCLUDE}
-    ${Boost_INCLUDE_DIRS}
     ${WASMEDGE_CORE_PATH}/include
-    ${WASMEDGE_CORE_PATH}/thirdparty
     ${WASMEDGE_CORE_BIN_PATH}/include/api
   )
 endif()
