@@ -2,6 +2,7 @@
 #include <wasmedge.h>
 
 #include "image_module.h"
+#include "wasmedge-image.h"
 
 #ifdef __cplusplus
 extern "C" {
