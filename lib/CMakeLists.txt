@@ -8,6 +8,7 @@ add_library(wasmedgeHostModuleWasmEdgeImage
 target_link_libraries(wasmedgeHostModuleWasmEdgeImage
   PUBLIC
   wasmedgeCommon
+  wasmedgeSystem
   Boost::boost
   ${JPEG_LIB}
   ${PNG_LIB}
@@ -31,6 +32,7 @@ if (BUILD_SHARED_LIB)
   target_link_libraries(wasmedge-image_c
     PUBLIC
     wasmedgeCommon
+    wasmedgeSystem
     Boost::boost
     ${ZLIB_LIBRARIES}
   )
