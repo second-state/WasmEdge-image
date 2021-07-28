@@ -8,6 +8,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif()
 
+set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
 if(CMAKE_BUILD_TYPE STREQUAL Release OR CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
   set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 endif()
@@ -22,12 +23,29 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_SKIP_RPATH ON)
 
 # List of WasmEdge options
-option(BUILD_TOOLS "Generate wasmedge and wasmedgec tools." OFF)
-option(BUILD_AOT_RUNTIME "Enable WasmEdge LLVM-based ahead of time compilation runtime." OFF)
+option(WASMEDGE_BUILD_TOOLS "Generate wasmedge and wasmedgec tools." OFF)
+option(WASMEDGE_BUILD_AOT_RUNTIME "Enable WasmEdge LLVM-based ahead of time compilation runtime." OFF)
 # AOT runtime is not needed in this stand-alone project
-option(BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
+option(WASMEDGE_BUILD_SHARED_LIB "Generate the WasmEdge shared library." OFF)
+option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
 
-find_package(Boost "1.68.0" REQUIRED)
+find_package(Boost QUIET)
+if(${Boost_FOUND})
+else()
+  FetchContent_Declare(
+    Boost
+    URL https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2
+    URL_HASH SHA256=f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41
+  )
+  set(BOOST_ENABLE_CMAKE ON)
+  set(BOOST_RUNTIME_LINK static)
+  set(BUILD_TESTING OFF)
+  FetchContent_MakeAvailable(Boost)
+  add_library(Boost_boost INTERFACE)
+  add_library(Boost::boost ALIAS Boost_boost)
+  target_include_directories(Boost_boost INTERFACE ${boost_SOURCE_DIR})
+endif()
+
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.so")
 find_package(ZLIB REQUIRED)
 
@@ -51,7 +69,7 @@ if(NOT WASMEDGE_CORE_PATH)
   FetchContent_Declare(
     wasmedge
     GIT_REPOSITORY https://github.com/WasmEdge/WasmEdge.git
-    GIT_TAG 0.8.1
+    GIT_TAG 0.8.2-rc.2
   )
 
   FetchContent_GetProperties(wasmedge)

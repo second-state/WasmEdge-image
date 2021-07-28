@@ -21,11 +21,9 @@ jobs:
       run: |
         yum check-update || true
         yum install -y wget
-        curl -s -L -O --remote-name-all https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.tar.bz2
-        bzip2 -dc boost_1_75_0.tar.bz2 | tar -xf -
         export PATH="/toolchain/bin:$PATH"
         export CC=gcc
         export CXX=g++
         rm -rf build
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_TOOLS=Off -DBOOST_INCLUDEDIR=./boost_1_75_0/ .
+        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release .
         cmake --build build

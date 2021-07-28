@@ -19,8 +19,8 @@ $ sudo apt-get install -y libjpeg-dev libpng-dev
 Or you can download and install the pre-built shared libraries:
 
 ```bash
-$ wget https://github.com/second-state/wasmedge-image/releases/download/0.8.1/WasmEdge-image-deps-0.8.1-manylinux1_x86_64.tar.gz
-$ tar -C /usr/local/lib -zxvf WasmEdge-image-deps-0.8.1-manylinux1_x86_64.tar.gz
+$ wget https://github.com/second-state/wasmedge-image/releases/download/0.8.2-rc2/WasmEdge-image-deps-0.8.2-rc2-manylinux1_x86_64.tar.gz
+$ tar -C /usr/local/lib -zxvf WasmEdge-image-deps-0.8.2-rc2-manylinux1_x86_64.tar.gz
 $ ln -s /usr/local/lib/libjpeg.so.8.3.0 /usr/local/lib/libjpeg.so
 $ ln -s /usr/local/lib/libpng16.so.16.37.0 /usr/local/lib/libpng.so
 $ ldconfig
@@ -69,7 +69,7 @@ $ sudo apt install -y clang
 ```bash
 $ git clone https://github.com/second-state/WasmEdge-image.git
 $ cd WasmEdge-image
-$ git checkout 0.8.1
+$ git checkout 0.8.2-rc2
 ```
 
 ## Build WasmEdge-Image
@@ -82,9 +82,9 @@ We provides two options for setting up the WasmEdge-Core:
 ```bash
 # After pulling our WasmEdge docker image
 $ docker run -it --rm \
-    -v <path/to/your/WasmEdge-tensorflow/source/folder>:/root/WasmEdge-tensorflow \
+    -v <path/to/your/WasmEdge-image/source/folder>:/root/WasmEdge-image \
     wasmedge/wasmedge:latest
-(docker)$ cd /root/WasmEdge-tensorflow
+(docker)$ cd /root/WasmEdge-image
 (docker)$ mkdir -p build && cd build
 ```
 
