@@ -29,6 +29,7 @@ option(WASMEDGE_BUILD_AOT_RUNTIME "Enable WasmEdge LLVM-based ahead of time comp
 option(WASMEDGE_BUILD_SHARED_LIB "Generate the WasmEdge shared library." OFF)
 option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
 
+include(FetchContent)
 find_package(Boost QUIET)
 if(${Boost_FOUND})
 else()
