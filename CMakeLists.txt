@@ -29,23 +29,7 @@ option(WASMEDGE_BUILD_AOT_RUNTIME "Enable WasmEdge LLVM-based ahead of time comp
 option(WASMEDGE_BUILD_SHARED_LIB "Generate the WasmEdge shared library." OFF)
 option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
 
-include(FetchContent)
-find_package(Boost QUIET)
-if(${Boost_FOUND})
-else()
-  FetchContent_Declare(
-    Boost
-    URL https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2
-    URL_HASH SHA256=f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41
-  )
-  set(BOOST_ENABLE_CMAKE ON)
-  set(BOOST_RUNTIME_LINK static)
-  set(BUILD_TESTING OFF)
-  FetchContent_MakeAvailable(Boost)
-  add_library(Boost_boost INTERFACE)
-  add_library(Boost::boost ALIAS Boost_boost)
-  target_include_directories(Boost_boost INTERFACE ${boost_SOURCE_DIR})
-endif()
+# boost is found in the WasmEdge-core.
 
 SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.so")
 find_package(ZLIB REQUIRED)
