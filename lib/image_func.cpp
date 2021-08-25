@@ -10,7 +10,6 @@
 #include <boost/gil/extension/numeric/sampler.hpp>
 #include <boost/gil/io/read_image.hpp>
 
-
 #include "common/log.h"
 #include "common/span.h"
 #include "image_func.h"
@@ -45,15 +44,13 @@ void resizeImg(const Image &Img, uint32_t W, uint32_t H, uint8_t *DstBuf) {
                           boost::gil::bilinear_sampler());
 }
 
-
-
 /// Helper function to normalize image.
 void normalizeImg(Span<const uint8_t> V, float *DstBuf) {
   for (uint32_t I = 0; I < V.size(); I++) {
     *(DstBuf + I) = V[I] / 255.0;
   }
 }
-//
+/// Helper function to to calculate x gradient unsafely;
 void x_gradient_unguarded(const boost::gil::gray8c_view_t& src, const boost::gil::gray8s_view_t& dst)
 {
   for (int y=0; y<src.height(); ++y)
@@ -65,12 +62,14 @@ void x_gradient_unguarded(const boost::gil::gray8c_view_t& src, const boost::gil
       dst_it[x] = (src_it[x-1] - src_it[x+1]) / 2;
   }
 }
+/// Helper function to calculate x gradient
 void x_gradient(const boost::gil::gray8c_view_t& src, const boost::gil::gray8s_view_t& dst)
 {
   assert(src.width()>=2);
   x_gradient_unguarded(subimage_view(src, 1, 0, src.width()-2, src.height()),
                        subimage_view(dst, 1, 0, src.width()-2, src.height()));
 }
+//Helper function to color conversion
 void x_luminosity_gradient(const boost::gil::rgb8c_view_t& src, const boost::gil::gray8s_view_t& dst)
 {
   boost::gil::gray8_image_t ccv_image(src.dimensions());
