@@ -36,16 +36,16 @@ find_package(ZLIB REQUIRED)
 
 # libjpeg and libpng path
 set(JPEG_LIB
-  ${CMAKE_CURRENT_SOURCE_DIR}/lib/libjpeg.a
+  ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg.a
 )
 set(PNG_LIB
-  ${CMAKE_CURRENT_SOURCE_DIR}/lib/libpng16.a
+  ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16.a
 )
 set(JPEG_INCLUDE
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/jpeg
+  ${CMAKE_CURRENT_SOURCE_DIR}/utils/jpeg
 )
 set(PNG_INCLUDE
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/png
+  ${CMAKE_CURRENT_SOURCE_DIR}/utils/png
 )
 
 # Clone WasmEdge-core
