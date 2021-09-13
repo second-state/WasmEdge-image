@@ -50,33 +50,6 @@ void normalizeImg(Span<const uint8_t> V, float *DstBuf) {
     *(DstBuf + I) = V[I] / 255.0;
   }
 }
-/// Helper function to to calculate x gradient unsafely;
-void x_gradient_unguarded(const boost::gil::gray8c_view_t& src, const boost::gil::gray8s_view_t& dst)
-{
-  for (int y=0; y<src.height(); ++y)
-  {
-    boost::gil::gray8c_view_t::x_iterator src_it = src.row_begin(y);
-    boost::gil::gray8s_view_t::x_iterator dst_it = dst.row_begin(y);
-
-    for (int x=0; x<src.width(); ++x)
-      dst_it[x] = (src_it[x-1] - src_it[x+1]) / 2;
-  }
-}
-/// Helper function to calculate x gradient
-void x_gradient(const boost::gil::gray8c_view_t& src, const boost::gil::gray8s_view_t& dst)
-{
-  assert(src.width()>=2);
-  x_gradient_unguarded(subimage_view(src, 1, 0, src.width()-2, src.height()),
-                       subimage_view(dst, 1, 0, src.width()-2, src.height()));
-}
-//Helper function to color conversion
-void x_luminosity_gradient(const boost::gil::rgb8c_view_t& src, const boost::gil::gray8s_view_t& dst)
-{
-  boost::gil::gray8_image_t ccv_image(src.dimensions());
-  copy_pixels(color_converted_view<boost::gil::gray8_pixel_t>(src), view(ccv_image));
-
-  x_gradient(const_view(ccv_image), dst);
-}
 } // namespace
 
 Expect<uint32_t>
@@ -246,7 +219,7 @@ Expect<uint32_t>
 WasmedgeImageLoadJPGToLuma::body(Runtime::Instance::MemoryInstance *MemInst,
                                  uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                  uint32_t TargetImgW, uint32_t TargetImgH,
-                                 uint32_t DstBufPtr){
+                                 uint32_t DstBufPtr) {
   /// Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
@@ -256,15 +229,10 @@ WasmedgeImageLoadJPGToLuma::body(Runtime::Instance::MemoryInstance *MemInst,
                     boost::gil::jpeg_tag())) {
     return 1;
   }
-
-  boost::gil::gray8s_view_t GrayTmpView;
-  x_luminosity_gradient(boost::gil::const_view(Img),GrayTmpView);
-  auto DSTView = boost::gil::interleaved_view(
-      TargetImgW, TargetImgH, reinterpret_cast<boost::gil::gray8s_view_t *>(DstBufPtr),
-      TargetImgH * boost::gil::num_channels<boost::gil::gray8s_view_t>::value * sizeof(uint8_t));
-  boost::gil::resize_view(boost::gil::const_view(Img), DSTView,
-                          boost::gil::bilinear_sampler());
-
+  boost::gil::color_converted_view<boost::gil::gray8_pixel_t>(
+      boost::gil::view(Img));
+  resizeImg(Img, TargetImgW, TargetImgH,
+            MemInst->getPointer<uint8_t *>(DstBufPtr));
   return 0;
 }
 } // namespace Host

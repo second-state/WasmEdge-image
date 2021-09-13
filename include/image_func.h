@@ -81,8 +81,8 @@ public:
                         uint32_t DstBufPtr);
 };
 class WasmedgeImageLoadJPGToLuma
-    : public WasmEdgeImage<WasmedgeImageLoadJPGToLuma>{
-  public:
+    : public WasmEdgeImage<WasmedgeImageLoadJPGToLuma> {
+public:
   Expect<uint32_t> body(Runtime::Instance::MemoryInstance *MemInst,
                         uint32_t ImgBufPtr, uint32_t ImgBufLen,
                         uint32_t TargetImgW, uint32_t TargetImgH,
