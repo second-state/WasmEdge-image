@@ -22,7 +22,7 @@ target_include_directories(wasmedgeHostModuleWasmEdgeImage
   ${WASMEDGE_CORE_PATH}/include
 )
 
-if (BUILD_SHARED_LIB)
+if (WASMEDGE_IMAGE_BUILD_SHARED_LIB)
   add_library(wasmedge-image_c SHARED
     wasmedge-image.cpp
     image_module.cpp
