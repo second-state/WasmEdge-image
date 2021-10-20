@@ -34,6 +34,8 @@ if (WASMEDGE_IMAGE_BUILD_SHARED_LIB)
     wasmedgeCommon
     wasmedgeSystem
     Boost::boost
+    ${JPEG_LIB}
+    ${PNG_LIB}
     ${ZLIB_LIBRARIES}
   )
 
