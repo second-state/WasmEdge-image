@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
+find_package(Boost QUIET)
+
 add_library(wasmedgeHostModuleWasmEdgeImage
   image_module.cpp
   image_func.cpp
