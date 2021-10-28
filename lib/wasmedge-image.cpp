@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-#include <wasmedge.h>
-
+#include "wasmedge/wasmedge-image.h"
 #include "image_module.h"
-#include "wasmedge-image.h"
 
 #ifdef __cplusplus
 extern "C" {

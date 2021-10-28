@@ -4,27 +4,7 @@ The [WasmEdge](https://github.com/WasmEdge/WasmEdge) (formerly `SSVM`) is a high
 
 ## Motivation
 
-For this WasmEdge Image extension, we prefer to link the [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) statically into the WasmEdge Image static library. On the other hand, the C API shared library version of this WasmEdge Image extension requires the `libjpeg` and `libpng` shared library. Hence, we compile and release the pre-built static and shared library of [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) on the legacy operating system, and link them into our WasmEdge Image extension library for not only reducing the compilation time, but also saving the library installation.
-
-## Requirements
-
-The WasmEdge Image shared library `libwasmedge-image_c.so` is provided for the WasmEdge-Image extension of the WasmEdge shared library. When linking with this shared library, `libjpeg.so.8` and `libpng16.so.16` is required.
-
-For `ubuntu 20.04`, the following commands can install these libraries:
-```bash
-$ sudo apt-get update
-$ sudo apt-get install -y libjpeg-dev libpng-dev
-```
-
-Or you can download and install the pre-built shared libraries:
-
-```bash
-$ wget https://github.com/second-state/wasmedge-image/releases/download/0.8.2/WasmEdge-image-deps-0.8.2-manylinux1_x86_64.tar.gz
-$ tar -C /usr/local/lib -zxvf WasmEdge-image-deps-0.8.2-manylinux1_x86_64.tar.gz
-$ ln -s /usr/local/lib/libjpeg.so.8.3.0 /usr/local/lib/libjpeg.so
-$ ln -s /usr/local/lib/libpng16.so.16.37.0 /usr/local/lib/libpng.so
-$ ldconfig
-```
+For this WasmEdge Image extension, we prefer to link the [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) statically into the both WasmEdge Image static and shared library. Hence, we compile and release the pre-built static and shared library of [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) on the legacy operating system, and link them into our WasmEdge Image extension library for not only reducing the compilation time, but also saving the library installation.
 
 ## License
 
@@ -69,7 +49,7 @@ $ sudo apt install -y clang
 ```bash
 $ git clone https://github.com/second-state/WasmEdge-image.git
 $ cd WasmEdge-image
-$ git checkout 0.8.2
+$ git checkout 0.9.0-rc1
 ```
 
 ## Build WasmEdge-Image
@@ -101,7 +81,7 @@ $ docker run -it --rm \
 ```
 
 The shared library `build/lib/libwasmedge-image_c.so` is the C API to create `wasmedge-image` import object.
-The header `build/include/wasmedge-image.h` is the header of the shared library.
+The header `build/include/wasmedge/wasmedge-image.h` is the header of the shared library.
 The static library `build/lib/libwasmedgeHostModuleWasmEdgeImage.a` is for executables linking in CMake.
 
 # How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11
@@ -127,16 +107,9 @@ $ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manyl
 
 ```bash
 (docker) $ cd /root/workspace/jpeg-8c
-(docker) $ ./configure && make
-# The JPEG shared library will be at `.libs/libjpeg.so.8.3.0`, and the static library will be at `.libs/libjpeg.a`.
+(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off && make
+# The JPEG static library will be at `.libs/libjpeg.a`.
 (docker) $ cd /root/workspace/libpng-1.6.37
-(docker) $ ./configure && make
-# The PNG shared library will be at `.libs/libpng16.so.16.37.0`, and the static library will be at `.libs/libpng16.a`.
+(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off && make
+# The PNG static library will be at `.libs/libpng16.a`.
 ```
-
-# Minimum requirements of our pre-built shared libraries
-
-| Pre-built shared library          | GLIBC          | GLIBCXX       | CXXABI          |
-| --------------------------        | -------------- | ------------- | --------------- |
-| libjpeg.so.8                      | 2.14           | -             | -               |
-| libpng16.so.16                    | 2.14           | -             | -               |

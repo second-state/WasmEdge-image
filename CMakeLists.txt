@@ -30,8 +30,6 @@ option(WASMEDGE_BUILD_SHARED_LIB "Generate the WasmEdge shared library." OFF)
 option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
 
 # boost is found in the WasmEdge-core.
-
-SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.so")
 find_package(ZLIB REQUIRED)
 
 # libjpeg and libpng path
@@ -54,7 +52,7 @@ if(NOT WASMEDGE_CORE_PATH)
   FetchContent_Declare(
     wasmedge
     GIT_REPOSITORY https://github.com/WasmEdge/WasmEdge.git
-    GIT_TAG 0.8.2
+    GIT_TAG 0.9.0-rc.1
   )
 
   FetchContent_GetProperties(wasmedge)

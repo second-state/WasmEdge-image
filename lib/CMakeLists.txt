@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
+find_package(Boost QUIET)
+
 add_library(wasmedgeHostModuleWasmEdgeImage
   image_module.cpp
   image_func.cpp
@@ -34,6 +36,8 @@ if (WASMEDGE_IMAGE_BUILD_SHARED_LIB)
     wasmedgeCommon
     wasmedgeSystem
     Boost::boost
+    ${JPEG_LIB}
+    ${PNG_LIB}
     ${ZLIB_LIBRARIES}
   )
 
