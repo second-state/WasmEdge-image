@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: 2019-2022 Second State INC
+
 #include <sstream>
 #include <string>
 #include <vector>
@@ -18,7 +20,7 @@ namespace WasmEdge {
 namespace Host {
 
 namespace {
-/// Helper function to read jpeg buffer to gil::image
+// Helper function to read jpeg buffer to gil::image
 template <typename Image, typename FormatTag>
 bool readBufToImg(const char *Buf, uint32_t Len, Image &Img,
                   FormatTag const &FTag) {
@@ -33,7 +35,7 @@ bool readBufToImg(const char *Buf, uint32_t Len, Image &Img,
   return true;
 }
 
-/// Helper function to resize image. 8-bit depth only.
+// Helper function to resize image. 8-bit depth only.
 template <typename Image>
 void resizeImg(const Image &Img, uint32_t W, uint32_t H, uint8_t *DstBuf) {
   uint32_t C = boost::gil::num_channels<typename Image::view_t>::value;
@@ -44,7 +46,7 @@ void resizeImg(const Image &Img, uint32_t W, uint32_t H, uint8_t *DstBuf) {
                           boost::gil::bilinear_sampler());
 }
 
-/// Helper function to normalize image.
+// Helper function to normalize image.
 void normalizeImg(Span<const uint8_t> V, float *DstBuf) {
   for (uint32_t I = 0; I < V.size(); I++) {
     *(DstBuf + I) = V[I] / 255.0;
@@ -57,7 +59,7 @@ WasmEdgeImageLoadJPGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
                                  uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                  uint32_t TargetImgW, uint32_t TargetImgH,
                                  uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }
@@ -77,7 +79,7 @@ WasmEdgeImageLoadJPGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
                                  uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                  uint32_t TargetImgW, uint32_t TargetImgH,
                                  uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }
@@ -97,7 +99,7 @@ WasmEdgeImageLoadJPGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
                                    uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                    uint32_t TargetImgW, uint32_t TargetImgH,
                                    uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }
@@ -118,7 +120,7 @@ WasmEdgeImageLoadJPGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
                                    uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                    uint32_t TargetImgW, uint32_t TargetImgH,
                                    uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }
@@ -139,7 +141,7 @@ WasmEdgeImageLoadPNGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
                                  uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                  uint32_t TargetImgW, uint32_t TargetImgH,
                                  uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }
@@ -159,7 +161,7 @@ WasmEdgeImageLoadPNGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
                                  uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                  uint32_t TargetImgW, uint32_t TargetImgH,
                                  uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }
@@ -179,7 +181,7 @@ WasmEdgeImageLoadPNGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
                                    uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                    uint32_t TargetImgW, uint32_t TargetImgH,
                                    uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }
@@ -200,7 +202,7 @@ WasmEdgeImageLoadPNGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
                                    uint32_t ImgBufPtr, uint32_t ImgBufLen,
                                    uint32_t TargetImgW, uint32_t TargetImgH,
                                    uint32_t DstBufPtr) {
-  /// Check memory instance from module.
+  // Check memory instance from module.
   if (MemInst == nullptr) {
     return Unexpect(ErrCode::ExecutionFailed);
   }

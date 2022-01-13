@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: 2019-2022 Second State INC
+
 #include "wasmedge/wasmedge-image.h"
 #include "image_module.h"
 
@@ -12,5 +14,5 @@ WasmEdge_ImportObjectContext *WasmEdge_Image_ImportObjectCreate() {
 }
 
 #ifdef __cplusplus
-} /// extern "C"
+} // extern "C"
 #endif

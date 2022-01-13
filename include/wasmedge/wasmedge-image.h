@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: 2019-2022 Second State INC
+
 //===-- WasmEdge-image/wasmedge-image.h - WasmEdge Image C API ------------===//
 //
 // Part of the WasmEdge Project.
@@ -18,7 +20,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/// Need to install the WasmEdge C library first.
+// Need to install the WasmEdge C library first.
 #include <wasmedge/wasmedge.h>
 
 #ifdef __cplusplus
@@ -36,7 +38,7 @@ WASMEDGE_CAPI_EXPORT extern WasmEdge_ImportObjectContext *
 WasmEdge_Image_ImportObjectCreate();
 
 #ifdef __cplusplus
-} /// extern "C"
+} // extern "C"
 #endif
 
-#endif /// __WASMEDGE_IMAGE_C_API_H__
+#endif // __WASMEDGE_IMAGE_C_API_H__
