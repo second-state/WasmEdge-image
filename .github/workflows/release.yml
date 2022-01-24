@@ -36,24 +36,43 @@ jobs:
         body_path: .CurrentChangelog.md
         draft: true
         prerelease: false
-  build_and_upload_manylinux2014_x86_64:
-    name: Build WasmEdge-Image on manylinux2014_x86_64 platform
+  build_and_upload_manylinux:
+    strategy:
+      matrix:
+        include:
+          - name: manylinux2014 x86_64
+            host_runner: ubuntu-latest
+            docker_tag: manylinux2014_x86_64
+            checkout_version: v2
+          - name: manylinux2014 aarch64
+            host_runner: ARM64
+            docker_tag: manylinux2014_aarch64
+            checkout_version: v2
+    name: ${{ matrix.name }} platform
     needs: create
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.host_runner }}
     container:
-      image: wasmedge/wasmedge:manylinux2014_x86_64
+      image: wasmedge/wasmedge:${{ matrix.docker_tag }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Build manylinux2014_x86_64 package
+    - name: Build ${{ matrix.name }} package
       run: |
-        yum check-update || true
-        yum install -y wget
         export PATH="/toolchain/bin:$PATH"
         export CC=gcc
         export CXX=g++
-        rm -rf build
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release .
+        export CPPFLAGS=-I/toolchain/include
+        export LDFLAGS=-L/toolchain/lib64
+        curl -s -L -O --remote-name-all https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2
+        echo "f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41  boost_1_76_0.tar.bz2" | sha256sum -c
+        bzip2 -dc boost_1_76_0.tar.bz2 | tar -xf -
+        if ! cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release -DBoost_NO_SYSTEM_PATHS=TRUE -DBOOST_INCLUDEDIR=$(pwd)/boost_1_76_0/; then
+            echo === CMakeOutput.log ===
+            cat build/CMakeFiles/CMakeOutput.log
+            echo === CMakeError.log ===
+            cat build/CMakeFiles/CMakeError.log
+            exit 1
+        fi
         cmake --build build
         cd build
         tar -zcvf WasmEdge-image.tar.gz include/wasmedge/wasmedge-image.h lib/libwasmedge-image_c.so
@@ -62,21 +81,21 @@ jobs:
         mv build/WasmEdge-image.tar.gz WasmEdge-image.tar.gz
         mv build/WasmEdge-image.tar.xz WasmEdge-image.tar.xz
         ls -alF
-    - name: Upload manylinux2014_x86_64 tar.gz package
+    - name: Upload ${{ matrix.name }} tar.gz package
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create.outputs.upload_url }}
         asset_path: WasmEdge-image.tar.gz
-        asset_name: WasmEdge-image-${{ needs.create.outputs.version }}-manylinux2014_x86_64.tar.gz
+        asset_name: WasmEdge-image-${{ needs.create.outputs.version }}-${{ matrix.docker_tag }}.tar.gz
         asset_content_type: application/x-gzip
-    - name: Upload manylinux2014_x86_64 tar.xz package
+    - name: Upload ${{ matrix.name }} tar.xz package
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.create.outputs.upload_url }}
         asset_path: WasmEdge-image.tar.xz
-        asset_name: WasmEdge-image-${{ needs.create.outputs.version }}-manylinux2014_x86_64.tar.xz
+        asset_name: WasmEdge-image-${{ needs.create.outputs.version }}-${{ matrix.docker_tag }}.tar.xz
         asset_content_type: application/x-xz

@@ -84,7 +84,7 @@ The shared library `build/lib/libwasmedge-image_c.so` is the C API to create `wa
 The header `build/include/wasmedge/wasmedge-image.h` is the header of the shared library.
 The static library `build/lib/libwasmedgeHostModuleWasmEdgeImage.a` is for executables linking in CMake.
 
-# How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11
+# How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11 x86_64
 
 ## Download the libjpeg and libpng source
 
@@ -111,5 +111,35 @@ $ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manyl
 # The JPEG static library will be at `.libs/libjpeg.a`.
 (docker) $ cd /root/workspace/libpng-1.6.37
 (docker) $ CFLAGS=-fPIC ./configure --enable-shared=off && make
+# The PNG static library will be at `.libs/libpng16.a`.
+```
+
+# How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 7.9 aarch64
+
+## Download the libjpeg and libpng source
+
+```bash
+$ mkdir workspace && cd workspace
+$ wget https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
+$ tar Jxvf libpng-1.6.37.tar.xz
+$ wget http://ijg.org/files/jpegsrc.v8c.tar.gz
+$ tar -zxvf jpegsrc.v8c.tar.gz
+```
+
+## Pull the manylinux2014_aarch64 docker image and run
+
+```bash
+$ docker pull wasmedge/wasmedge:manylinux2014_aarch64
+$ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux2014_aarch64
+```
+
+## Build the libjpeg and the libpng
+
+```bash
+(docker) $ cd /root/workspace/jpeg-8c
+(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu && make
+# The JPEG static library will be at `.libs/libjpeg.a`.
+(docker) $ cd /root/workspace/libpng-1.6.37
+(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu && make
 # The PNG static library will be at `.libs/libpng16.a`.
 ```
