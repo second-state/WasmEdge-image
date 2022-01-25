@@ -143,3 +143,37 @@ $ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manyl
 (docker) $ CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu && make
 # The PNG static library will be at `.libs/libpng16.a`.
 ```
+
+# How to use Android NDK to cross-compile `libjpeg` and `libpng` for Android aarch64 
+
+## Download the libjpeg and libpng source
+
+```bash
+$ mkdir workspace && cd workspace
+$ wget https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
+$ tar Jxvf libpng-1.6.37.tar.xz
+$ git clone https://github.com/stohrendorf/libjpeg-cmake
+```
+
+## Download Android NDK and set the environment
+Download the NDK from [android website](https://developer.android.google.cn/ndk/downloads).
+```bash
+$ export ANDROID_NDK_HOME=/path/to/ndk
+```
+
+## Build the libjpeg and the libpng
+
+```bash
+$ cd libjpeg-cmake && mkdir build && cd build
+$ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake
+$ ninja
+# The JPEG static library will be at `libjpeg-cmake/build/liblibjpeg.a`.
+
+$ cd libpng-1.6.37 && mkdir build && cd build
+$ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DPNG_SHARED=OFF
+$ ninja
+# The PNG static library will be at `libpng-1.6.37/build/libpng16.a`.
+```
+
+
+
