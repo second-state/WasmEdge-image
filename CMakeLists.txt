@@ -48,6 +48,13 @@ if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "
   set(PNG_LIB
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_x86_64.a
   )
+elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64" AND CMAKE_SYSTEM_NAME STREQUAL "Android" )
+  set(JPEG_LIB
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_aarch64_android.a
+  )
+  set(PNG_LIB
+    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_aarch64_android.a
+  )
 elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
   set(JPEG_LIB
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_aarch64.a
