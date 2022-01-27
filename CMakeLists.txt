@@ -41,29 +41,37 @@ option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared 
 find_package(ZLIB REQUIRED)
 
 # libjpeg and libpng path
-if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
-  set(JPEG_LIB
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_x86_64.a
-  )
-  set(PNG_LIB
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_x86_64.a
-  )
-elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64" AND CMAKE_SYSTEM_NAME STREQUAL "Android" )
-  set(JPEG_LIB
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_aarch64_android.a
-  )
-  set(PNG_LIB
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_aarch64_android.a
-  )
-elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-  set(JPEG_LIB
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_aarch64.a
-  )
-  set(PNG_LIB
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_aarch64.a
-  )
-else()
+if(UNIX)
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
+    set(JPEG_LIB
+      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_x86_64.a
+    )
+    set(PNG_LIB
+      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_x86_64.a
+    )
+  elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+    set(JPEG_LIB
+      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_aarch64.a
+    )
+    set(PNG_LIB
+      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_aarch64.a
+    )
+  else()
   message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+  endif()
+elseif(ANDROID)
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+    set(JPEG_LIB
+      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_android_aarch64.a
+    )
+    set(PNG_LIB
+      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_android_aarch64.a
+    )
+  elseif()
+  message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+  endif()
+else()
+  message(FATAL_ERROR "Unsupported system: ${CMAKE_SYSTEM_NAME}")
 endif()
 set(JPEG_INCLUDE
   ${CMAKE_CURRENT_SOURCE_DIR}/utils/jpeg
