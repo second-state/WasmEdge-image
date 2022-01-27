@@ -156,7 +156,7 @@ $ git clone https://github.com/stohrendorf/libjpeg-cmake
 ```
 
 ## Download Android NDK and set the environment
-Download the NDK from [android website](https://developer.android.google.cn/ndk/downloads).
+Download the NDK from [android website](https://developer.android.com/ndk/downloads).
 ```bash
 $ export ANDROID_NDK_HOME=/path/to/ndk
 ```
@@ -174,6 +174,3 @@ $ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDRO
 $ ninja
 # The PNG static library will be at `libpng-1.6.37/build/libpng16.a`.
 ```
-
-
-
