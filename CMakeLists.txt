@@ -41,34 +41,22 @@ option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared 
 find_package(ZLIB REQUIRED)
 
 # libjpeg and libpng path
-if(UNIX)
-  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
-    set(JPEG_LIB
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_x86_64.a
-    )
-    set(PNG_LIB
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_x86_64.a
-    )
-  elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-    set(JPEG_LIB
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_aarch64.a
-    )
-    set(PNG_LIB
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_aarch64.a
-    )
-  else()
-  message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
-  endif()
-elseif(ANDROID)
+if(ANDROID)
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-    set(JPEG_LIB
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_android_aarch64.a
-    )
-    set(PNG_LIB
-      ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_android_aarch64.a
-    )
+    set(JPEG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_android_aarch64.a)
+    set(PNG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_android_aarch64.a)
   elseif()
-  message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+    message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+  endif()
+elseif(UNIX)
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
+    set(JPEG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_manylinux2014_x86_64.a)
+    set(PNG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_manylinux2014_x86_64.a)
+  elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+    set(JPEG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_manylinux2014_aarch64.a)
+    set(PNG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_manylinux2014_aarch64.a)
+  else()
+    message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
   endif()
 else()
   message(FATAL_ERROR "Unsupported system: ${CMAKE_SYSTEM_NAME}")
@@ -86,7 +74,7 @@ if(NOT WASMEDGE_CORE_PATH)
   FetchContent_Declare(
     wasmedge
     GIT_REPOSITORY https://github.com/WasmEdge/WasmEdge.git
-    GIT_TAG 0.9.1-beta.1
+    GIT_TAG 0.9.1-beta.2
   )
 
   FetchContent_GetProperties(wasmedge)
