@@ -146,13 +146,13 @@ $ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manyl
 
 # How to use Android NDK to cross-compile `libjpeg` and `libpng` for Android aarch64 
 
-## Download the libjpeg and libpng source
+## Download the libjpeg and libpng-turbo source
 
 ```bash
 $ mkdir workspace && cd workspace
 $ wget https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
 $ tar Jxvf libpng-1.6.37.tar.xz
-$ git clone https://github.com/stohrendorf/libjpeg-cmake
+$ git clone https://github.com/libjpeg-turbo/libjpeg-turbo.git
 ```
 
 ## Download Android NDK and set the environment
@@ -164,10 +164,10 @@ $ export ANDROID_NDK_HOME=/path/to/ndk
 ## Build the libjpeg and the libpng
 
 ```bash
-$ cd libjpeg-cmake && mkdir build && cd build
-$ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake
+$ cd libjpeg-turbo && mkdir build && cd build
+$ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DWITH_JPEG8=1
 $ ninja
-# The JPEG static library will be at `libjpeg-cmake/build/liblibjpeg.a`.
+# The JPEG static library will be at `libjpeg-turbo/build/libjpeg.a`.
 
 $ cd libpng-1.6.37 && mkdir build && cd build
 $ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DPNG_SHARED=OFF
