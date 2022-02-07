@@ -1,176 +1,194 @@
 # WasmEdge for Image Extension
 
-The [WasmEdge](https://github.com/WasmEdge/WasmEdge) (formerly `SSVM`) is a high performance WebAssembly runtime optimized for server side applications. This project provides support for accessing with [JPEG library](http://ijg.org/) and [PNG library](http://www.libpng.org/pub/png/libpng.html).
+The [WasmEdge](https://github.com/WasmEdge/WasmEdge) (formerly `SSVM`) is a high performance WebAssembly runtime optimized for server side applications. This project provides support for accessing with [JPEG library](http://ijg.org/), [libjpeg-turbo library](https://libjpeg-turbo.org/), and [PNG library](http://www.libpng.org/pub/png/libpng.html).
 
 ## Motivation
 
-For this WasmEdge Image extension, we prefer to link the [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) statically into the both WasmEdge Image static and shared library. Hence, we compile and release the pre-built static and shared library of [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) on the legacy operating system, and link them into our WasmEdge Image extension library for not only reducing the compilation time, but also saving the library installation.
+For this WasmEdge Image extension, we prefer to link the [libjpeg](http://ijg.org/), [libjpeg-turbo](https://libjpeg-turbo.org/), and [libpng](http://www.libpng.org/pub/png/libpng.html) statically into the both WasmEdge Image static and shared library. Hence, we compile and release the pre-built static library of [libjpeg](http://ijg.org/), [libjpeg-turbo](https://libjpeg-turbo.org/), and [libpng](http://www.libpng.org/pub/png/libpng.html) on the legacy operating systems or for the Android platforms, and link them into our WasmEdge Image extension library for not only reducing the compilation time, but also saving the library installation.
 
 ## License
 
-This project is under the License as the same as the [libjpeg](http://ijg.org/) and [libpng](http://www.libpng.org/pub/png/libpng.html) projects.
+This project is under the License as the same as the [libjpeg](http://ijg.org/), [libjpeg-turbo](https://libjpeg-turbo.org/), and [libpng](http://www.libpng.org/pub/png/libpng.html) projects.
 
 ### Credits
 
 - [libjpeg](http://ijg.org/)
+- [libjpeg-turbo](https://libjpeg-turbo.org/)
 - [libpng](http://www.libpng.org/pub/png/libpng.html)
 
-# Getting Started
+## Getting Started
 
-## Prepare the environment
+### Prepare the environment
 
-### Use our docker image (Recommanded)
+#### Use our docker image (Recommanded)
 
 Our docker image is based on `ubuntu 20.04`.
 
 ```bash
-$ docker pull wasmedge/wasmedge
+docker pull wasmedge/wasmedge
 ```
 
-### Or setup the environment manually
+#### Or setup the environment manually
 
 Please notice that WasmEdge-Image requires cmake>=3.11 and libboost>=1.68.
 
 ```bash
 # Tools and libraries
-$ sudo apt install -y \
-	software-properties-common \
-	cmake \
-	libboost-all-dev
+sudo apt install -y \
+    software-properties-common \
+    cmake \
+    libboost-all-dev
 
 # WasmEdge supports both clang++ and g++ compilers
 # You can choose one of them for building this project
-$ sudo apt install -y gcc g++
-$ sudo apt install -y clang
+sudo apt install -y gcc g++
+sudo apt install -y clang
 ```
 
-## Get WasmEdge-Image Source Code
+### Get WasmEdge-Image Source Code
 
 ```bash
-$ git clone https://github.com/second-state/WasmEdge-image.git
-$ cd WasmEdge-image
-$ git checkout 0.9.1-beta.2
+git clone https://github.com/second-state/WasmEdge-image.git
+cd WasmEdge-image
+git checkout 0.9.1-beta.2
 ```
 
-## Build WasmEdge-Image
+### Build WasmEdge-Image
 
 WasmEdge-Image depends on WasmEdge-Core, you have to prepare WasmEdge-Core before you build WasmEdge-Image.
 We provides two options for setting up the WasmEdge-Core:
 
-### Create and Enter the Build Folder
+#### Create and Enter the Build Folder
 
 ```bash
 # After pulling our WasmEdge docker image
-$ docker run -it --rm \
+docker run -it --rm \
     -v <path/to/your/WasmEdge-image/source/folder>:/root/WasmEdge-image \
     wasmedge/wasmedge:latest
-(docker)$ cd /root/WasmEdge-image
-(docker)$ mkdir -p build && cd build
+# In docker
+cd /root/WasmEdge-image
+mkdir -p build && cd build
 ```
 
-### Option 1. Use built-in CMakeLists to get WasmEdge-Core (Recommended)
+#### Option 1. Use built-in CMakeLists to get WasmEdge-Core (Recommended)
 
 ```bash
-(docker)$ cmake -DCMAKE_BUILD_TYPE=Release .. && make
+# In docker
+cmake -DCMAKE_BUILD_TYPE=Release .. && make
 ```
 
-### Option 2. Use specific version of WasmEdge-Core by giving WASMEDGE_CORE_PATH
+#### Option 2. Use specific version of WasmEdge-Core by giving WASMEDGE_CORE_PATH
 
 ```bash
-(docker)$ cmake -DWASMEDGE_CORE_PATH=<path/to/WasmEdge/source> -DCMAKE_BUILD_TYPE=Release .. && make
+# In docker
+cmake -DWASMEDGE_CORE_PATH=<path/to/WasmEdge/source> -DCMAKE_BUILD_TYPE=Release .. && make
 ```
 
 The shared library `build/lib/libwasmedge-image_c.so` is the C API to create `wasmedge-image` import object.
 The header `build/include/wasmedge/wasmedge-image.h` is the header of the shared library.
 The static library `build/lib/libwasmedgeHostModuleWasmEdgeImage.a` is for executables linking in CMake.
 
-# How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11 x86_64
+## How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11 x86_64
 
-## Download the libjpeg and libpng source
+### Download the libjpeg and libpng source
 
 ```bash
-$ mkdir workspace && cd workspace
-$ wget https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
-$ tar Jxvf libpng-1.6.37.tar.xz
-$ wget http://ijg.org/files/jpegsrc.v8c.tar.gz
-$ tar -zxvf jpegsrc.v8c.tar.gz
+mkdir workspace && cd workspace
+curl -sLO https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
+tar Jxvf libpng-1.6.37.tar.xz
+curl -sLO http://ijg.org/files/jpegsrc.v8c.tar.gz
+tar -zxvf jpegsrc.v8c.tar.gz
 ```
 
-## Pull the manylinux1 docker image and run
+### Pull the manylinux1_x86_64 docker image and run
 
 ```bash
-$ docker pull wasmedge/wasmedge:manylinux1_x86_64
-$ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux1_x86_64
+docker pull wasmedge/wasmedge:manylinux1_x86_64
+docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux1_x86_64
 ```
 
-## Build the libjpeg and the libpng
+### Build the libjpeg and the libpng for manylinux1_x86_64
 
 ```bash
-(docker) $ cd /root/workspace/jpeg-8c
-(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off && make
+# In docker
+cd /root/workspace/jpeg-8c
+CFLAGS=-fPIC ./configure --enable-shared=off && make
 # The JPEG static library will be at `.libs/libjpeg.a`.
-(docker) $ cd /root/workspace/libpng-1.6.37
-(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off && make
+cd /root/workspace/libpng-1.6.37
+CFLAGS=-fPIC ./configure --enable-shared=off && make
 # The PNG static library will be at `.libs/libpng16.a`.
 ```
 
-# How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 7.9 aarch64
+## How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 7.9 aarch64
 
-## Download the libjpeg and libpng source
+### Download the libjpeg and libpng source
 
 ```bash
-$ mkdir workspace && cd workspace
-$ wget https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
-$ tar Jxvf libpng-1.6.37.tar.xz
-$ wget http://ijg.org/files/jpegsrc.v8c.tar.gz
-$ tar -zxvf jpegsrc.v8c.tar.gz
+mkdir workspace && cd workspace
+curl -sLO https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
+tar Jxvf libpng-1.6.37.tar.xz
+curl -sLO http://ijg.org/files/jpegsrc.v8c.tar.gz
+tar -zxvf jpegsrc.v8c.tar.gz
 ```
 
-## Pull the manylinux2014_aarch64 docker image and run
+### Pull the manylinux2014_aarch64 docker image and run
 
 ```bash
-$ docker pull wasmedge/wasmedge:manylinux2014_aarch64
-$ docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux2014_aarch64
+docker pull wasmedge/wasmedge:manylinux2014_aarch64
+docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux2014_aarch64
 ```
 
-## Build the libjpeg and the libpng
+### Build the libjpeg and the libpng for manylinux2014_aarch64
 
 ```bash
-(docker) $ cd /root/workspace/jpeg-8c
-(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu && make
+# In docker
+cd /root/workspace/jpeg-8c
+CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu && make
 # The JPEG static library will be at `.libs/libjpeg.a`.
-(docker) $ cd /root/workspace/libpng-1.6.37
-(docker) $ CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu && make
+cd /root/workspace/libpng-1.6.37
+CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu && make
 # The PNG static library will be at `.libs/libpng16.a`.
 ```
 
-# How to use Android NDK to cross-compile `libjpeg` and `libpng` for Android aarch64 
+## How to use Android NDK to cross-compile `libjpeg-turbo` and `libpng` for Android aarch64
 
-## Download the libjpeg and libpng source
+### Download the libjpeg-turbo and libpng source
 
 ```bash
-$ mkdir workspace && cd workspace
-$ wget https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
-$ tar Jxvf libpng-1.6.37.tar.xz
-$ git clone https://github.com/stohrendorf/libjpeg-cmake
+mkdir workspace && cd workspace
+curl -sLO https://downloads.sourceforge.net/libpng/libpng-1.6.37.tar.xz
+tar Jxvf libpng-1.6.37.tar.xz
+curl -sL https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/2.1.2.tar.gz -o libjpeg-turbo-2.1.2.tar.gz
+tar -zxvf libjpeg-turbo-2.1.2.tar.gz
 ```
 
-## Download Android NDK and set the environment
+### Download Android NDK and set the environment
+
 Download the NDK from [android website](https://developer.android.com/ndk/downloads).
+
 ```bash
-$ export ANDROID_NDK_HOME=/path/to/ndk
+curl -sLO https://dl.google.com/android/repository/android-ndk-r23b-linux.zip
+unzip -q android-ndk-r23b-linux.zip
 ```
 
-## Build the libjpeg and the libpng
+### Pull the WasmEdge docker image and run
 
 ```bash
-$ cd libjpeg-cmake && mkdir build && cd build
-$ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake
-$ ninja
-# The JPEG static library will be at `libjpeg-cmake/build/liblibjpeg.a`.
+docker pull wasmedge/wasmedge:latest
+docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:latest
+```
 
-$ cd libpng-1.6.37 && mkdir build && cd build
-$ cmake .. -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DPNG_SHARED=OFF
-$ ninja
-# The PNG static library will be at `libpng-1.6.37/build/libpng16.a`.
+### Build the libjpeg and the libpng for android
+
+```bash
+# In docker
+export ANDROID_NDK_HOME=/root/workspace/android-ndk-r23b
+cd /root/workspace/libjpeg-turbo-2.1.2
+cmake -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_ARM_MODE=arm -DANDROID_PLATFORM=android-23 -DANDROID_TOOLCHAIN=clang -DCMAKE_ASM_FLAGS="--target=aarch64-linux-android23" -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DENABLE_SHARED=FALSE -DWITH_JPEG8=1 -Bbuild .
+cmake --build build
+# The JPEG static library will be at `./build/liblibjpeg.a`.
+cd /root/workspace/libpng-1.6.37
+cmake -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DPNG_SHARED=OFF -Bbuild .
+cmake --build build
+# The PNG static library will be at `./build/libpng16.a`.
 ```
