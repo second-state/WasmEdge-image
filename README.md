@@ -90,7 +90,7 @@ The static library `build/lib/libwasmedgeHostModuleWasmEdgeImage.a` is for execu
 
 ## How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11 x86_64
 
-### Download the libjpeg and libpng source
+### Download the libjpeg and libpng source on CentOS 5.11 x86_64
 
 ```bash
 mkdir workspace && cd workspace
@@ -121,7 +121,7 @@ CFLAGS=-fPIC ./configure --enable-shared=off && make
 
 ## How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 7.9 aarch64
 
-### Download the libjpeg and libpng source
+### Download the libjpeg and libpng source on CentOS 7.9 aarch64
 
 ```bash
 mkdir workspace && cd workspace
@@ -152,7 +152,7 @@ CFLAGS=-fPIC ./configure --enable-shared=off --build=aarch64-unknown-linux-gnu &
 
 ## How to use Android NDK to cross-compile `libjpeg-turbo` and `libpng` for Android aarch64
 
-### Download the libjpeg-turbo and libpng source
+### Download the libjpeg-turbo and libpng source on Ubuntu 20.04
 
 ```bash
 mkdir workspace && cd workspace
@@ -186,9 +186,20 @@ export ANDROID_NDK_HOME=/root/workspace/android-ndk-r23b
 cd /root/workspace/libjpeg-turbo-2.1.2
 cmake -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_ARM_MODE=arm -DANDROID_PLATFORM=android-23 -DANDROID_TOOLCHAIN=clang -DCMAKE_ASM_FLAGS="--target=aarch64-linux-android23" -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DENABLE_SHARED=FALSE -DWITH_JPEG8=1 -Bbuild .
 cmake --build build
-# The JPEG static library will be at `./build/liblibjpeg.a`.
+# The JPEG static library will be at `./build/libjpeg.a`.
 cd /root/workspace/libpng-1.6.37
 cmake -GNinja -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-23 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DPNG_SHARED=OFF -Bbuild .
 cmake --build build
 # The PNG static library will be at `./build/libpng16.a`.
 ```
+
+## Minimum requirements of our pre-built static libraries
+
+| Pre-built static library         | Architecture | Supported operating systems         |
+| -------------------------------- | ------------ | ----------------------------------- |
+| libjpeg_android_aarch64.a        | arm64-v8a    | Android 23 or later                 |
+| libpng16_android_aarch64.a       | arm64-v8a    | Android 23 or later                 |
+| libjpeg_manylinux2014_aarch64.a  | aarch64      | manylinux2014 or later (GLIBC 2.17) |
+| libpng16_manylinux2014_aarch64.a | aarch64      | manylinux2014 or later (GLIBC 2.17) |
+| libjpeg_manylinux2014_x86_64.a   | x86_64       | manylinux1 or later (GLIBC 2.14)    |
+| libpng16_manylinux2014_x86_64.a  | x86_64       | manylinux1 or later (GLIBC 2.14)    |
