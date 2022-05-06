@@ -8,8 +8,8 @@
 extern "C" {
 #endif
 
-WasmEdge_ImportObjectContext *WasmEdge_Image_ImportObjectCreate() {
-  return reinterpret_cast<WasmEdge_ImportObjectContext *>(
+WasmEdge_ModuleInstanceContext *WasmEdge_Image_ModuleInstanceCreate() {
+  return reinterpret_cast<WasmEdge_ModuleInstanceContext *>(
       new WasmEdge::Host::WasmEdgeImageModule());
 }
 

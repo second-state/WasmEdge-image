@@ -9,7 +9,8 @@
 namespace WasmEdge {
 namespace Host {
 
-WasmEdgeImageModule::WasmEdgeImageModule() : ImportObject("wasmedge_image") {
+WasmEdgeImageModule::WasmEdgeImageModule()
+    : Runtime::Instance::ModuleInstance("wasmedge_image") {
   addHostFunc("wasmedge_image_load_jpg_to_rgb8",
               std::make_unique<WasmEdgeImageLoadJPGToRGB8>());
   addHostFunc("wasmedge_image_load_jpg_to_bgr8",

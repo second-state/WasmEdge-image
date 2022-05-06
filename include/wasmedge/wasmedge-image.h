@@ -27,15 +27,15 @@
 extern "C" {
 #endif
 
-/// Creation of the WasmEdge_ImportObjectContext for the wasmedge_image host
+/// Creation of the WasmEdge_ModuleInstanceContext for the wasmedge_image host
 /// functions.
 ///
-/// The caller owns the object and should call `WasmEdge_ImportObjectDelete` to
-/// free it.
+/// The caller owns the object and should call `WasmEdge_ModuleInstanceDelete`
+/// to destroy it.
 ///
 /// \returns pointer to context, NULL if failed.
-WASMEDGE_CAPI_EXPORT extern WasmEdge_ImportObjectContext *
-WasmEdge_Image_ImportObjectCreate();
+WASMEDGE_CAPI_EXPORT extern WasmEdge_ModuleInstanceContext *
+WasmEdge_Image_ModuleInstanceCreate();
 
 #ifdef __cplusplus
 } // extern "C"

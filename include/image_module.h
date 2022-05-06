@@ -3,12 +3,12 @@
 
 #pragma once
 
-#include "runtime/importobj.h"
+#include "runtime/instance/module.h"
 
 namespace WasmEdge {
 namespace Host {
 
-class WasmEdgeImageModule : public Runtime::ImportObject {
+class WasmEdgeImageModule : public Runtime::Instance::ModuleInstance {
 public:
   WasmEdgeImageModule();
   ~WasmEdgeImageModule() = default;
