@@ -101,13 +101,13 @@ jobs:
         asset_content_type: application/x-xz
 
   build_and_upload_darwin_x86_64:
-    name: MacOS x86_64
+    name: Darwin x86_64 platform
     needs: create
     runs-on: macos-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Build WasmEdge-image for MacOS x86_64
+    - name: Build WasmEdge-image for Darwin x86_64
       run: |
         brew install llvm ninja boost cmake
         export PATH="/usr/local/opt/llvm/bin:$PATH"
@@ -128,7 +128,7 @@ jobs:
         cd ..
         mv build/WasmEdge-image.tar.gz WasmEdge-image.tar.gz
         ls -alF
-    - name: Upload MacOS x86_64 tar.gz package
+    - name: Upload darwin x86_64 tar.gz package
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
