@@ -36,6 +36,7 @@ jobs:
         body_path: .CurrentChangelog.md
         draft: true
         prerelease: true
+
   build_and_upload_manylinux:
     strategy:
       matrix:
@@ -98,6 +99,41 @@ jobs:
         asset_name: WasmEdge-image-${{ needs.create.outputs.version }}-${{ matrix.docker_tag }}.tar.xz
         asset_content_type: application/x-xz
 
+  build_and_upload_darwin_x86_64:
+    name: MacOS x86_64
+    needs: create
+    runs-on: macos-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build WasmEdge-image for MacOS x86_64
+      run: |
+        brew install ninja boost cmake
+        export CC=clang
+        export CXX=clang++
+        if ! cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=Release; then
+            echo === CMakeOutput.log ===
+            cat build/CMakeFiles/CMakeOutput.log
+            echo === CMakeError.log ===
+            cat build/CMakeFiles/CMakeError.log
+            exit 1
+        fi
+        cmake --build build
+        cd build
+        tar -zcvf WasmEdge-image.tar.gz include/wasmedge/wasmedge-image.h lib/libwasmedge-image_c.dylib
+        cd ..
+        mv build/WasmEdge-image.tar.gz WasmEdge-image.tar.gz
+        ls -alF
+    - name: Upload MacOS x86_64 tar.gz package
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.create.outputs.upload_url }}
+        asset_path: WasmEdge-image.tar.gz
+        asset_name: WasmEdge-image-${{ needs.create.outputs.version }}-darwin_x86_64.tar.gz
+        asset_content_type: application/x-gzip
+
   build_and_upload_android:
     name: Android platforms
     needs: create
@@ -107,7 +143,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
     - name: Install dependency
       run: |
         apt update && apt install -y unzip
@@ -118,7 +153,6 @@ jobs:
         cp -r cmake-3.22.2-linux-x86_64/share /usr/local
         curl -sLO https://dl.google.com/android/repository/android-ndk-r23b-linux.zip
         unzip -q android-ndk-r23b-linux.zip
-
     - name: Build WasmEdge-image for Android
       run: |
         export ANDROID_NDK_HOME=$(pwd)/android-ndk-r23b/
