@@ -50,7 +50,7 @@ sudo apt install -y clang
 ```bash
 git clone https://github.com/second-state/WasmEdge-image.git
 cd WasmEdge-image
-git checkout 0.10.0-alpha.2
+git checkout 0.10.0-rc.1
 ```
 
 ### Build WasmEdge-Image
@@ -203,3 +203,5 @@ cmake --build build
 | libpng16_manylinux2014_aarch64.a | aarch64      | manylinux2014 or later (GLIBC 2.17) |
 | libjpeg_manylinux2014_x86_64.a   | x86_64       | manylinux1 or later (GLIBC 2.14)    |
 | libpng16_manylinux2014_x86_64.a  | x86_64       | manylinux1 or later (GLIBC 2.14)    |
+| libjpeg_darwin_x86_64.a          | x86_64       | MacOS 10.15 or later                |
+| libpng16_darwin_x86_64.a         | x86_64       | MacOS 10.15 or later                |
