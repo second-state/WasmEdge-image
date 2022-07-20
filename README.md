@@ -1,6 +1,6 @@
 # WasmEdge for Image Extension
 
-The [WasmEdge](https://github.com/WasmEdge/WasmEdge) (formerly `SSVM`) is a high performance WebAssembly runtime optimized for server side applications. This project provides support for accessing with [JPEG library](http://ijg.org/), [libjpeg-turbo library](https://libjpeg-turbo.org/), and [PNG library](http://www.libpng.org/pub/png/libpng.html).
+The [WasmEdge](https://github.com/WasmEdge/WasmEdge) is a high performance WebAssembly runtime optimized for server side applications. This project provides support for accessing with [JPEG library](http://ijg.org/), [libjpeg-turbo library](https://libjpeg-turbo.org/), and [PNG library](http://www.libpng.org/pub/png/libpng.html).
 
 ## Motivation
 
@@ -50,7 +50,7 @@ sudo apt install -y clang
 ```bash
 git clone https://github.com/second-state/WasmEdge-image.git
 cd WasmEdge-image
-git checkout 0.10.1-alpha.2
+git checkout 0.10.1-alpha.3
 ```
 
 ### Build WasmEdge-Image
@@ -90,7 +90,7 @@ The static library `build/lib/libwasmedgeHostModuleWasmEdgeImage.a` is for execu
 
 ## How to build `libjpeg` and `libpng` on the legacy operating system - CentOS 5.11 x86_64
 
-### Download the libjpeg and libpng source on CentOS 5.11 x86_64
+### Download the libjpeg and libpng source on CentOS 7.9 x86_64
 
 ```bash
 mkdir workspace && cd workspace
@@ -100,14 +100,14 @@ curl -sLO http://ijg.org/files/jpegsrc.v8c.tar.gz
 tar -zxvf jpegsrc.v8c.tar.gz
 ```
 
-### Pull the manylinux1_x86_64 docker image and run
+### Pull the manylinux2014_x86_64 docker image and run
 
 ```bash
-docker pull wasmedge/wasmedge:manylinux1_x86_64
-docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux1_x86_64
+docker pull wasmedge/wasmedge:manylinux2014_x86_64
+docker run -it --rm -v $(pwd):/root/$(basename $(pwd)) wasmedge/wasmedge:manylinux2014_x86_64
 ```
 
-### Build the libjpeg and the libpng for manylinux1_x86_64
+### Build the libjpeg and the libpng for manylinux2014_x86_64
 
 ```bash
 # In docker
@@ -201,7 +201,7 @@ cmake --build build
 | libpng16_android_aarch64.a       | arm64-v8a    | Android 23 or later                 |
 | libjpeg_manylinux2014_aarch64.a  | aarch64      | manylinux2014 or later (GLIBC 2.17) |
 | libpng16_manylinux2014_aarch64.a | aarch64      | manylinux2014 or later (GLIBC 2.17) |
-| libjpeg_manylinux2014_x86_64.a   | x86_64       | manylinux1 or later (GLIBC 2.14)    |
-| libpng16_manylinux2014_x86_64.a  | x86_64       | manylinux1 or later (GLIBC 2.14)    |
+| libjpeg_manylinux2014_x86_64.a   | x86_64       | manylinux2014 or later (GLIBC 2.17) |
+| libpng16_manylinux2014_x86_64.a  | x86_64       | manylinux2014 or later (GLIBC 2.17) |
 | libjpeg_darwin_x86_64.a          | x86_64       | MacOS 10.15 or later                |
 | libpng16_darwin_x86_64.a         | x86_64       | MacOS 10.15 or later                |
