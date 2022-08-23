@@ -54,14 +54,13 @@ void normalizeImg(Span<const uint8_t> V, float *DstBuf) {
 }
 } // namespace
 
-Expect<uint32_t>
-WasmEdgeImageLoadJPGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
-                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                 uint32_t TargetImgW, uint32_t TargetImgH,
-                                 uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadJPGToRGB8::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::rgb8_image_t Img;
@@ -74,14 +73,13 @@ WasmEdgeImageLoadJPGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
   return 0;
 }
 
-Expect<uint32_t>
-WasmEdgeImageLoadJPGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
-                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                 uint32_t TargetImgW, uint32_t TargetImgH,
-                                 uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadJPGToBGR8::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::bgr8_image_t Img;
@@ -94,14 +92,13 @@ WasmEdgeImageLoadJPGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
   return 0;
 }
 
-Expect<uint32_t>
-WasmEdgeImageLoadJPGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                   uint32_t TargetImgW, uint32_t TargetImgH,
-                                   uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadJPGToRGB32F::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::rgb8_image_t Img;
@@ -115,14 +112,13 @@ WasmEdgeImageLoadJPGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
   return 0;
 }
 
-Expect<uint32_t>
-WasmEdgeImageLoadJPGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                   uint32_t TargetImgW, uint32_t TargetImgH,
-                                   uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadJPGToBGR32F::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::bgr8_image_t Img;
@@ -136,14 +132,13 @@ WasmEdgeImageLoadJPGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
   return 0;
 }
 
-Expect<uint32_t>
-WasmEdgeImageLoadPNGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
-                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                 uint32_t TargetImgW, uint32_t TargetImgH,
-                                 uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadPNGToRGB8::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::rgb8_image_t Img;
@@ -156,14 +151,13 @@ WasmEdgeImageLoadPNGToRGB8::body(Runtime::Instance::MemoryInstance *MemInst,
   return 0;
 }
 
-Expect<uint32_t>
-WasmEdgeImageLoadPNGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
-                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                 uint32_t TargetImgW, uint32_t TargetImgH,
-                                 uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadPNGToBGR8::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::bgr8_image_t Img;
@@ -176,14 +170,13 @@ WasmEdgeImageLoadPNGToBGR8::body(Runtime::Instance::MemoryInstance *MemInst,
   return 0;
 }
 
-Expect<uint32_t>
-WasmEdgeImageLoadPNGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                   uint32_t TargetImgW, uint32_t TargetImgH,
-                                   uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadPNGToRGB32F::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::rgb8_image_t Img;
@@ -197,14 +190,13 @@ WasmEdgeImageLoadPNGToRGB32F::body(Runtime::Instance::MemoryInstance *MemInst,
   return 0;
 }
 
-Expect<uint32_t>
-WasmEdgeImageLoadPNGToBGR32F::body(Runtime::Instance::MemoryInstance *MemInst,
-                                   uint32_t ImgBufPtr, uint32_t ImgBufLen,
-                                   uint32_t TargetImgW, uint32_t TargetImgH,
-                                   uint32_t DstBufPtr) {
+Expect<uint32_t> WasmEdgeImageLoadPNGToBGR32F::body(
+    const Runtime::CallingFrame &Frame, uint32_t ImgBufPtr, uint32_t ImgBufLen,
+    uint32_t TargetImgW, uint32_t TargetImgH, uint32_t DstBufPtr) {
   // Check memory instance from module.
+  auto *MemInst = Frame.getMemoryByIndex(0);
   if (MemInst == nullptr) {
-    return Unexpect(ErrCode::ExecutionFailed);
+    return Unexpect(ErrCode::Value::HostFuncError);
   }
 
   boost::gil::bgr8_image_t Img;
