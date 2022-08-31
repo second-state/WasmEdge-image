@@ -41,7 +41,7 @@ option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared 
 
 # WasmEdge dependencies versions
 if(NOT WASMEDGE_DEPS_VERSION)
-  set(WASMEDGE_DEPS_VERSION "0.11.0-rc.1")
+  set(WASMEDGE_DEPS_VERSION "0.11.0")
 endif()
 
 # boost is found in the WasmEdge-core.
