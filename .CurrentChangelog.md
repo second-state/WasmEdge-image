@@ -1,4 +1,4 @@
-### 0.11.2-alpha.1 (2022-10-25)
+### 0.11.2-rc.1 (2022-10-28)
 
 This is the host function extension for [WasmEdge](https://github.com/WasmEdge/WasmEdge).
 Please refer to the [WasmEdge 0.11.1-alpha.1](https://github.com/WasmEdge/WasmEdge/releases/tag/0.11.1-alpha.1) for more details.
