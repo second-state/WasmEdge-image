@@ -27,6 +27,8 @@ WasmEdgeImageModule::WasmEdgeImageModule()
               std::make_unique<WasmEdgeImageLoadPNGToRGB32F>());
   addHostFunc("wasmedge_image_load_png_to_bgr32f",
               std::make_unique<WasmEdgeImageLoadPNGToBGR32F>());
+  addHostFunc("wasmedge_image_load_jpg_to_luma",
+              std::make_unique<WasmedgeImageLoadJPGToLuma>());
 }
 
 } // namespace Host

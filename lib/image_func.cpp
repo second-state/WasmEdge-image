@@ -209,6 +209,25 @@ Expect<uint32_t> WasmEdgeImageLoadPNGToBGR32F::body(
   normalizeImg(ImgData, MemInst->getPointer<float *>(DstBufPtr));
   return 0;
 }
-
+Expect<uint32_t>
+WasmedgeImageLoadJPGToLuma::body(Runtime::Instance::MemoryInstance *MemInst,
+                                 uint32_t ImgBufPtr, uint32_t ImgBufLen,
+                                 uint32_t TargetImgW, uint32_t TargetImgH,
+                                 uint32_t DstBufPtr) {
+  /// Check memory instance from module.
+  if (MemInst == nullptr) {
+    return Unexpect(ErrCode::ExecutionFailed);
+  }
+  boost::gil::rgb8_image_t Img;
+  if (!readBufToImg(MemInst->getPointer<char *>(ImgBufPtr), ImgBufLen, Img,
+                    boost::gil::jpeg_tag())) {
+    return 1;
+  }
+  boost::gil::color_converted_view<boost::gil::gray8_pixel_t>(
+      boost::gil::view(Img));
+  resizeImg(Img, TargetImgW, TargetImgH,
+            MemInst->getPointer<uint8_t *>(DstBufPtr));
+  return 0;
+}
 } // namespace Host
 } // namespace WasmEdge
