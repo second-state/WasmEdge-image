@@ -205,3 +205,5 @@ cmake --build build
 | libpng16_manylinux2014_x86_64.a  | x86_64       | manylinux2014 or later (GLIBC 2.17) |
 | libjpeg_darwin_x86_64.a          | x86_64       | MacOS 10.15 or later                |
 | libpng16_darwin_x86_64.a         | x86_64       | MacOS 10.15 or later                |
+| libjpeg_darwin_arm64.a           | arm64        | MacOS 12.0 or later                 |
+| libpng16_darwin_arm64.a          | arm64        | MacOS 12.0 or later                 |

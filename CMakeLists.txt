@@ -39,13 +39,30 @@ option(WASMEDGE_BUILD_SHARED_LIB "Generate the WasmEdge shared library." OFF)
 # libwasmedge_c.so is not needed in this stand-alone project.
 option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared library." ON)
 
-# WasmEdge dependencies versions
-if(NOT WASMEDGE_DEPS_VERSION)
-  set(WASMEDGE_DEPS_VERSION "0.12.1")
+# WasmEdge repositories versions
+if(NOT WASMEDGE_REPO_VERSION)
+  set(WASMEDGE_REPO_VERSION "0.12.1")
 endif()
 
-# boost is found in the WasmEdge-core.
 find_package(ZLIB REQUIRED)
+find_package(Boost 1.74.0)
+if(${Boost_FOUND})
+else()
+  include(FetchContent)
+  FetchContent_Declare(
+    Boost
+    URL https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2
+    URL_HASH SHA256=a6e1ab9b0860e6a2881dd7b21fe9f737a095e5f33a3a874afc6a345228597ee6
+  )
+  set(BOOST_ENABLE_CMAKE ON)
+  set(BOOST_RUNTIME_LINK static)
+  message(STATUS "Downloading boost 1.82.0 source")
+  FetchContent_MakeAvailable(Boost)
+  message(STATUS "Downloading boost 1.82.0 source - done")
+  add_library(Boost_boost INTERFACE)
+  add_library(Boost::boost ALIAS Boost_boost)
+  target_include_directories(Boost_boost SYSTEM INTERFACE ${boost_SOURCE_DIR})
+endif()
 
 # libjpeg and libpng path
 if(ANDROID)
@@ -59,6 +76,9 @@ elseif(APPLE)
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
     set(JPEG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_darwin_x86_64.a)
     set(PNG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_darwin_x86_64.a)
+  elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64")
+    set(JPEG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libjpeg_darwin_arm64.a)
+    set(PNG_LIB ${CMAKE_CURRENT_SOURCE_DIR}/utils/libpng16_darwin_arm64.a)
   else()
     message(FATAL_ERROR "Unsupported architecture: ${CMAKE_SYSTEM_PROCESSOR}")
   endif()
@@ -88,7 +108,7 @@ if(NOT WASMEDGE_CORE_PATH)
   FetchContent_Declare(
     wasmedge
     GIT_REPOSITORY https://github.com/WasmEdge/WasmEdge.git
-    GIT_TAG ${WASMEDGE_DEPS_VERSION}
+    GIT_TAG ${WASMEDGE_REPO_VERSION}
   )
 
   FetchContent_GetProperties(wasmedge)
