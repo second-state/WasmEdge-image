@@ -27,7 +27,7 @@ bool readBufToImg(const char *Buf, uint32_t Len, Image &Img,
   std::stringstream ImgStream;
   ImgStream.write(Buf, Len);
   try {
-    boost::gil::read_image(ImgStream, Img, FTag);
+    boost::gil::read_and_convert_image(ImgStream, Img, FTag);
   } catch (std::exception const &e) {
     spdlog::error(e.what());
     return false;

@@ -41,7 +41,7 @@ option(WASMEDGE_IMAGE_BUILD_SHARED_LIB "Generate the libwasmedge-image_c shared 
 
 # WasmEdge repositories versions
 if(NOT WASMEDGE_REPO_VERSION)
-  set(WASMEDGE_REPO_VERSION "0.12.1")
+  set(WASMEDGE_REPO_VERSION "0.13.0-alpha.1")
 endif()
 
 find_package(ZLIB REQUIRED)

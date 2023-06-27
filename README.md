@@ -1,4 +1,6 @@
-# WasmEdge for Image Extension
+# WasmEdge for Image Extension (WILL BE DEPRECATED SOON)
+
+> The WasmEdge extension will be deprecated soon and be replaced by the [WasmEdge-Image plug-in](https://wasmedge.org/docs/contribute/source/plugin/image).
 
 The [WasmEdge](https://github.com/WasmEdge/WasmEdge) is a high performance WebAssembly runtime optimized for server side applications. This project provides support for accessing with [JPEG library](http://ijg.org/), [libjpeg-turbo library](https://libjpeg-turbo.org/), and [PNG library](http://www.libpng.org/pub/png/libpng.html).
 
